@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IR_Projrct  Search</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .yalla-search-title {
+            font-family: 'Arial', sans-serif;
+            font-size: 3em;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .yalla-search-title span {
+            display: inline-block;
+        }
+        .yalla-search-title .y { color: #4285F4; }
+        .yalla-search-title .a1 { color: #EA4335; }
+        .yalla-search-title .l1 { color: #FBBC05; }
+        .yalla-search-title .l2 { color: #34A853; }
+        .yalla-search-title .a2 { color: #EA4335; }
+        .yalla-search-title .s { color: #4285F4; }
+        .yalla-search-title .e { color: #FBBC05; }
+        .yalla-search-title .r { color: #34A853; }
+        .yalla-search-title .c { color: #EA4335; }
+        .yalla-search-title .h { color: #4285F4; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="yalla-search-title">
+                    <span class="y">Y</span>
+                    <span class="a1">a</span>
+                    <span class="l1">l</span>
+                    <span class="l2">l</span>
+                    <span class="a2">a</span>
+                    <span class="s"> </span>
+                    <span class="s">S</span>
+                    <span class="e">e</span>
+                    <span class="a2">a</span>
+                    <span class="r">r</span>
+                    <span class="c">c</span>
+                    <span class="h">h</span>
+                </h1>
+                <form action="/personalized_search" method="get">
+                    <div class="form-group">
+                        <label for="user_id">User ID:</label>
+                        <input type="text" id="user_id" name="user_id" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="query">Query:</label>
+                        <input type="text" id="query" name="query" class="form-control typeahead" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataset">Choose a dataset:</label>
+                        <select id="dataset" name="dataset" class="form-control">
+                            <option value="quora">quora</option>
+                            <option value="antique">Antique</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="use_personalization" name="use_personalization">
+                        <label for="use_personalization">Use Personalization</label>
+                    </div>
+
+                    <!-- هنا hidden input لتمثيل hybrid -->
+                    <input type="hidden" name="representation" value="hybrid">
+
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <button id="chat-toggle" class="btn btn-secondary mt-3">Switch to Chatbot</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#query').typeahead({
+                source: function(query, process){
+                    var dataset = $('#dataset').val();
+                    return $.get('/suggest', { query: query, dataset: dataset }, function(data){
+                        return process(data);
+                    });
+                }
+            });
+
+            $('#chat-toggle').click(function(){
+                window.location.href = '/chat';
+            });
+        });
+    </script>
+</body>
+</html>

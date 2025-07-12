@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yalla Search Results</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .yalla-search-title {
+            font-family: 'Arial', sans-serif;
+            font-size: 3em;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .yalla-search-title span {
+            display: inline-block;
+        }
+        .yalla-search-title .y { color: #4285F4; }
+        .yalla-search-title .a1 { color: #EA4335; }
+        .yalla-search-title .l1 { color: #FBBC05; }
+        .yalla-search-title .l2 { color: #34A853; }
+        .yalla-search-title .a2 { color: #EA4335; }
+        .yalla-search-title .s { color: #4285F4; }
+        .yalla-search-title .e { color: #FBBC05; }
+        .yalla-search-title .r { color: #34A853; }
+        .yalla-search-title .c { color: #EA4335; }
+        .yalla-search-title .h { color: #4285F4; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="yalla-search-title">
+                    <span class="y">Y</span>
+                    <span class="a1">a</span>
+                    <span class="l1">l</span>
+                    <span class="l2">l</span>
+                    <span class="a2">a</span>
+                    <span class="s"> </span>
+                    <span class="s">S</span>
+                    <span class="e">e</span>
+                    <span class="a2">a</span>
+                    <span class="r">r</span>
+                    <span class="c">c</span>
+                    <span class="h">h</span>
+                </h1>
+
+                <h2 class="card-title mt-4">Results for "{{ query }}"</h2>
+
+                {% if query != corrected_query %}
+                    <p>
+                        Did you mean: 
+                        <a href="/personalized_search?query={{ corrected_query }}&dataset={{ request.args.get('dataset') }}&user_id={{ request.args.get('user_id') }}&use_personalization={{ request.args.get('use_personalization') }}">
+                            {{ corrected_query }}
+                        </a>?
+                    </p>
+                {% endif %}
+
+                {% if results %}
+                    <ul class="list-group mt-4">
+                        {% for result in results %}
+                            <li class="list-group-item">
+                                <strong>#{{ result.rank }} — Doc ID:</strong> {{ result.doc_id }}<br>
+                                <p>{{ result.text }}</p>
+                                <small>Score: {{ result.score }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="mt-4">No results found.</p>
+                {% endif %}
+
+                <a href="/" class="btn btn-secondary mt-4">Back to Search</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
