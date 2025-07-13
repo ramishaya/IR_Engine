@@ -1,5 +1,5 @@
 from scipy import sparse
-from Data_Representaion import create_tfidf_representation
+from src.representation.Data_Representaion import create_tfidf_representation
 import joblib
 #####################################################################
 save vectorizer & matrix

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import pandas as pd
-from Data_Processing_Antique import data_processing_antique
-from Data_Processing_Quora import data_processing_quora
+from src.preprocessing.Data_Process_Antique import data_processing_antique
+from src.preprocessing.Data_Process_Quora import data_processing_quora
 
 app = Flask(__name__)
 @app.route('/clean_text', methods=['POST'])

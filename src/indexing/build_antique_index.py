@@ -2,11 +2,11 @@ import pandas as pd
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse import save_npz
-from Data_Processing_Quora import data_processing_quora
+from src.preprocessing.Data_Process_Antique import data_processing_antique
 import time
 
 # 📌 تحميل بيانات الوثائق الأصلية
-docs_df = pd.read_csv("quora.tsv")
+docs_df = pd.read_csv("antique_docs_train.csv")
 
 # 📌 التأكد من وجود الأعمدة المطلوبة
 assert 'doc_id' in docs_df.columns and 'text' in docs_df.columns, "تأكد من وجود الأعمدة doc_id و text"
@@ -15,7 +15,7 @@ assert 'doc_id' in docs_df.columns and 'text' in docs_df.columns, "تأكد من
 docs_df['text'] = docs_df['text'].fillna('')
 
 # 📌 تنظيف النصوص
-docs_df["clean_text"] = docs_df["text"].apply(data_processing_quora)
+docs_df["clean_text"] = docs_df["text"].apply(data_processing_antique)
 
 # 📌 حساب وقت التنفيذ
 start_time = time.time()
@@ -32,9 +32,9 @@ elapsed_time = time.time() - start_time
 print(f"✅ تم بناء فهرس TF-IDF في {elapsed_time:.2f} ثانية")
 
 # 📌 حفظ تمثيل الوثائق (مصفوفة)
-save_npz("tfidf_quora.npz", tfidf_matrix)
+save_npz("antique_tfidf_vectors_final.npz", tfidf_matrix)
 
 # 📌 حفظ الـ vectorizer
-joblib.dump(vectorizer, "vectorizer_quora.joblib")
+joblib.dump(vectorizer, "antique_tfidf_vectorizer_final.joblib")
 
 print("✅ تم حفظ تمثيل الوثائق والفكتورايزر بنجاح 🎉")

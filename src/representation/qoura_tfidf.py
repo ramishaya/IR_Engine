@@ -2,7 +2,7 @@ import pandas as pd
 import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from scipy.sparse import save_npz
-from Data_Processing_Quora import data_processing_quora
+from src.preprocessing.Data_Process_Quora import data_processing_quora
 import time
 
 # 📌 تحميل بيانات الوثائق الأصلية

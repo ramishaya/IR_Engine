@@ -7,8 +7,8 @@ from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag
 from nltk.corpus import wordnet
-from Additional_StopWords_Quora import additional_stopwords
-from Abbreviations_Quora import abbreviations
+from src.preprocessing.Additional_StopWords_Antique import additional_stopwords
+from src.preprocessing.Abbreviations_Antique import abbreviations
 nltk.download('stopwords', quiet=True)
 nltk.download('punkt', quiet=True)
 nltk.download('wordnet', quiet=True)
@@ -69,11 +69,9 @@ def data_lemmatization(tokens):
     lemmatizer = WordNetLemmatizer()
     pos_tags = pos_tag(tokens)
     return [lemmatizer.lemmatize(word, pos=get_wordnet_pos(tag)) for word, tag in pos_tags]
-def data_processing_quora(text):
-    """Process text data through several cleaning and tokenizing steps"""
-    if not isinstance(text, str):  # ✅ لمنع الخطأ إن كانت القيمة NaN أو float
-        return ""
 
+def data_processing_antique(text):
+    """Process text data through several cleaning and tokenizing steps"""
     text = rephrasing_abbreviations(text)
     text = remove_punctuation(text)
     text = data_cleaning(text)
@@ -83,7 +81,6 @@ def data_processing_quora(text):
     tokens = to_lowercase(tokens)
     tokens = data_lemmatization(tokens)
     return " ".join(tokens)
-
 
 # Test the data_processing function
 # print(data_processing('Hi I am Karam , now we are Testing the Data processssingg function , here we havr the misstak in the textt , do you have any problems ? IN USA UK'))

@@ -1,5 +1,5 @@
-from Data_Processing_Quora import data_processing_quora
-from Data_Processing_Antique import data_processing_antique
+from src.preprocessing.Data_Process_Quora import data_processing_quora
+from src.preprocessing.Data_Process_Antique import data_processing_antique
 
 #######################################################################################
 # process the query using the dataset processer
